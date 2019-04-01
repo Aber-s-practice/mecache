@@ -15,7 +15,7 @@ You can control the time of cache failure by using the cache parameters.
 ```python
 from mecache import Memory
 
-memory = Memory("CACHE_PATH")
+memory = Memory()
 
 # Cache failure after 60 seconds
 @memory.cache(60)

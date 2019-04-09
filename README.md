@@ -57,6 +57,20 @@ def do(x, y):
     return x+y
 ```
 
+### asynchronous file modes
+
+```python
+from mecache import AioFile
+
+# CACHE_PATH like '/var/tmp/test-cache'
+file = AioFile("CACHE_PATH")
+
+# Cache failure after 60 seconds
+@file.cache(60)
+async def do(x, y):
+    return await do.something
+```
+
 ## Advanced usage
 
 If the parameters of a function are difficult to serialize using pickle, you can specify the rules that generate key by customizing `keyf`. The return value of the function `keyf`  must be a string.

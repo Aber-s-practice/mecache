@@ -5,10 +5,10 @@ from functools import wraps
 
 class BaseCache:
 
-    def get_cache(self, func, key):
+    def get_cache(self, func, key, max_time):
         raise NotImplementedError("You must overwrite 'get_cache'!")
 
-    def set_cache(self, result, func, key):
+    def set_cache(self, result, func, key, max_time):
         raise NotImplementedError("You must overwrite 'set_cache'!")
 
     def cache(self, max_time, keyf=None):

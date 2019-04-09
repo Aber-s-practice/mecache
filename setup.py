@@ -20,7 +20,8 @@ VERSION = None
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    "redis"
+    "redis",
+    "aiofiles"
 ]
 
 # What packages are optional?

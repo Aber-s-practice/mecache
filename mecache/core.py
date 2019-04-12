@@ -30,7 +30,7 @@ class BaseCache:
             @wraps(func)
             def warpper(*args, **kwargs):
                 if keyf is None:
-                    key = str(pickle.dumps([args, kwargs]))
+                    key = str(pickle.dumps([args, kwargs])).replace("\\", "/")
                 else:
                     key = keyf(*args, **kwargs)
                 # get result from cache
@@ -72,7 +72,7 @@ class AioBaseCache:
             @wraps(func)
             async def warpper(*args, **kwargs):
                 if keyf is None:
-                    key = str(pickle.dumps([args, kwargs]))
+                    key = str(pickle.dumps([args, kwargs])).replace("\\", "/")
                 else:
                     key = keyf(*args, **kwargs)
                 # get result from cache

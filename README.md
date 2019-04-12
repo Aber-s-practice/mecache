@@ -15,7 +15,7 @@ You can control the time of cache failure by using the cache parameters.
 ```python
 from mecache import Memory
 
-memory = Memory("CACHE_PATH")
+memory = Memory()
 
 # Cache failure after 60 seconds
 @memory.cache(60)
@@ -55,6 +55,20 @@ def do(x, y):
     import time
     time.sleep(2)
     return x+y
+```
+
+### asynchronous file modes
+
+```python
+from mecache import AioFile
+
+# CACHE_PATH like '/var/tmp/test-cache'
+file = AioFile("CACHE_PATH")
+
+# Cache failure after 60 seconds
+@file.cache(60)
+async def do(x, y):
+    return await do.something
 ```
 
 ## Advanced usage

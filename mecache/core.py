@@ -1,9 +1,20 @@
 import time
 import pickle
+import hmac
+from hashlib import sha1
 from functools import wraps
 
 
-class BaseCache:
+class Aboriginal:
+
+    @staticmethod
+    def keyf(*args, **kwargs):
+        key = pickle.dumps([args, kwargs])
+        mac = hmac.new(b'mecache', msg=key, digestmod=sha1)
+        return str(mac.hexdigest())
+
+
+class BaseCache(Aboriginal):
 
     def get_cache(self, func, key, max_time):
         raise NotImplementedError("You must overwrite 'get_cache'!")
@@ -30,7 +41,7 @@ class BaseCache:
             @wraps(func)
             def warpper(*args, **kwargs):
                 if keyf is None:
-                    key = str(pickle.dumps([args, kwargs])).replace("\\", "/")
+                    key = self.keyf(*args, **kwargs)
                 else:
                     key = keyf(*args, **kwargs)
                 # get result from cache
@@ -45,7 +56,7 @@ class BaseCache:
         return timeout
 
 
-class AioBaseCache:
+class AioBaseCache(Aboriginal):
 
     async def get_cache(self, func, key, max_time):
         raise NotImplementedError("You must overwrite 'get_cache'!")
@@ -64,15 +75,15 @@ class AioBaseCache:
 
             c = Cache()
             @c.cache(max_time=10, keyf=calc)
-            def add(x, y):
-                return x + y
+            async def add(x, y):
+                return await do.something
 
         """
         def timeout(func):
             @wraps(func)
             async def warpper(*args, **kwargs):
                 if keyf is None:
-                    key = str(pickle.dumps([args, kwargs])).replace("\\", "/")
+                    key = self.keyf(*args, **kwargs)
                 else:
                     key = keyf(*args, **kwargs)
                 # get result from cache

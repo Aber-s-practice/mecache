@@ -85,3 +85,35 @@ def key_by_user(request):
 def home(request):
     return render(request, 'home.html')
 ```
+
+You can also overwrite `keyf` for all cache. This is a example:
+
+```python
+from mecache import File
+
+class CustomFile(File):
+    @staticmethod
+    def keyf(*args, **kwargs):
+        string = do.something
+        return string
+
+file = CustomFile("CACHE_PATH")
+```
+
+### Custom made
+
+If you need a custom cache, you can use `BaseCache` or `AioBaseCache` to create your cache class. Like this
+
+```python
+from mecache import BaseCache
+
+class CustomCache(BaseCache):
+
+    def get_cache(self, func, key, max_time):
+        qual = func.__qualname__
+        return get(qual+":"+key)
+
+    def set_cache(self, result, func, key, max_time):
+        qual = func.__qualname__
+        set(qual+":"+key, result, ex=time.time()+max_time)
+```

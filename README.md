@@ -6,24 +6,9 @@ An easy-to-use cache module
 
 Run `pip install mecache` or `pipenv install mecache` to install.
 
-Built-in three cache modes, memory cache mode, file cache mode, redis cache mode.
+Built-in two cache modes, file cache mode, redis cache mode.
 
 You can control the time of cache failure by using the cache parameters.
-
-### memory modes
-
-```python
-from mecache import Memory
-
-memory = Memory()
-
-# Cache failure after 60 seconds
-@memory.cache(60)
-def do(x, y):
-    import time
-    time.sleep(2)
-    return x+y
-```
 
 ### redis modes
 
@@ -81,7 +66,7 @@ If the parameters of a function are difficult to serialize using pickle, you can
 def key_by_user(request):
     return request.user.username
 
-@memory.cache(60*60, keyf=key_by_user)
+@file.cache(60*60, keyf=key_by_user)
 def home(request):
     return render(request, 'home.html')
 ```

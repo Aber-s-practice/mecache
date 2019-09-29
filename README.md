@@ -32,7 +32,7 @@ def do(x, y):
 from mecache import AioRedis
 
 # Refer to https://aioredis.readthedocs.io/en/latest/api_reference.html#aioredis.create_redis_pool for all parameters
-file = AioRedis('redis://localhost')
+file = await AioRedis('redis://localhost')
 
 # Cache failure after 60 seconds
 @file.cache(60)

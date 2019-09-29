@@ -9,8 +9,11 @@ class Redis(BaseCache, RedisConnection):
 
     def get_cache(self, func, key, max_time):
         qual = func.__qualname__
-        return self.get(qual+":"+key)
+        r = self.get(qual+":"+key)
+        if r is None:
+            return None
+        return pickle.loads(r)
 
     def set_cache(self, result, func, key, max_time):
         qual = func.__qualname__
-        self.set(qual+":"+key, result, ex=time.time()+max_time)
+        self.set(qual+":"+key, pickle.dumps(result), ex=time.time()+max_time)

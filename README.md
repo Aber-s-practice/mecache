@@ -26,6 +26,20 @@ def do(x, y):
     return x+y
 ```
 
+### asynchronous redis modes
+
+```python
+from mecache import AioRedis
+
+# Refer to https://aioredis.readthedocs.io/en/latest/api_reference.html#aioredis.create_redis_pool for all parameters
+file = AioRedis('redis://localhost')
+
+# Cache failure after 60 seconds
+@file.cache(60)
+async def do(x, y):
+    return await do.something
+```
+
 ### file modes
 
 ```python

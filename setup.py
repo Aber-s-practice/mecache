@@ -20,13 +20,12 @@ VERSION = None
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    "redis",
     "aiofiles"
 ]
 
 # What packages are optional?
 EXTRAS = {
-    # 'fancy feature': ['django'],
+    'redis': ['redis', 'aioredis'],
 }
 
 # The rest you shouldn't have to touch too much :)
@@ -72,11 +71,8 @@ class UploadCommand(Command):
         pass
 
     def run(self):
-        try:
-            self.status('Removing previous builds…')
-            rmtree(os.path.join(here, 'dist'))
-        except OSError:
-            pass
+        self.status('Removing previous builds…')
+        rmtree(os.path.join(here, 'dist'), ignore_errors=True)
 
         self.status('Building Source and Wheel (universal) distribution…')
         os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
@@ -113,7 +109,7 @@ setup(
     extras_require=EXTRAS,
     include_package_data=True,
     license='MIT',
-    keywords=['cache', 'memory', 'redis', 'file', 'python'],
+    keywords=['cache', 'redis', 'file', 'python', 'asyncio', 'aiocache'],
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers

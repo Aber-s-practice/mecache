@@ -20,12 +20,14 @@ VERSION = None
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    "aiofiles"
+    'aiofiles',
+    'redis',
+    'aioredis'
 ]
 
 # What packages are optional?
 EXTRAS = {
-    'redis': ['redis', 'aioredis'],
+
 }
 
 # The rest you shouldn't have to touch too much :)

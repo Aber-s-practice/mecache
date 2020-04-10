@@ -1,14 +1,30 @@
 from .core import BaseCache, AioBaseCache
-from ._redis import Redis
-from ._aioredis import AioRedis
-from ._file import File
-from ._aiofile import AioFile
+
+try:
+    from ._file import File
+except ImportError:
+    pass
+
+try:
+    from ._aiofile import AioFile
+except ImportError:
+    pass
+
+try:
+    from ._redis import Redis
+except ImportError:
+    pass
+
+try:
+    from ._aioredis import AioRedis
+except ImportError:
+    pass
 
 __all__ = [
     'BaseCache',
     'AioBaseCache',
-    'Redis',
-    'AioRedis',
     'File',
     'AioFile',
+    'Redis',
+    'AioRedis',
 ]

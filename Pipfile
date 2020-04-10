@@ -8,9 +8,6 @@ autopep8 = "*"
 pylint = "*"
 
 [packages]
-redis = "*"
-aiofiles = "*"
-aioredis = "*"
 
 [requires]
 python_version = "3"
